@@ -1,0 +1,82 @@
+I:\vsproject\Bot\E7Bot\E7Bot\bin\Debug\E7Bot.exe.config
+I:\vsproject\Bot\E7Bot\E7Bot\bin\Debug\E7Bot.exe
+I:\vsproject\Bot\E7Bot\E7Bot\bin\Debug\E7Bot.pdb
+I:\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot.csprojAssemblyReference.cache
+I:\vsproject\Bot\E7Bot\E7Bot\obj\Debug\MainWindow.g.cs
+I:\vsproject\Bot\E7Bot\E7Bot\obj\Debug\App.g.cs
+I:\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot_MarkupCompile.cache
+I:\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot_MarkupCompile.lref
+I:\vsproject\Bot\E7Bot\E7Bot\obj\Debug\MainWindow.baml
+I:\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot.g.resources
+I:\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot.Properties.Resources.resources
+I:\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot.csproj.GenerateResource.cache
+I:\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot.csproj.CoreCompileInputs.cache
+I:\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot.exe
+I:\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot.pdb
+I:\vsproject\Bot\E7Bot\E7Bot\bin\Debug\AForge.dll
+I:\vsproject\Bot\E7Bot\E7Bot\bin\Debug\AForge.Imaging.dll
+I:\vsproject\Bot\E7Bot\E7Bot\bin\Debug\AForge.Math.dll
+I:\vsproject\Bot\E7Bot\E7Bot\bin\Debug\AForge.xml
+I:\vsproject\Bot\E7Bot\E7Bot\bin\Debug\AForge.Imaging.xml
+I:\vsproject\Bot\E7Bot\E7Bot\bin\Debug\AForge.Math.xml
+I:\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot.csproj.CopyComplete
+I:\vsproject\Bot\E7Bot\E7Bot\bin\Debug\ICSharpCode.WpfDesign.Designer.dll
+I:\vsproject\Bot\E7Bot\E7Bot\bin\Debug\ICSharpCode.WpfDesign.dll
+I:\vsproject\Bot\E7Bot\E7Bot\bin\Debug\ICSharpCode.WpfDesign.XamlDom.dll
+I:\vsproject\Bot\E7Bot\E7Bot\bin\Debug\ICSharpCode.WpfDesign.pdb
+I:\vsproject\Bot\E7Bot\E7Bot\bin\Debug\ICSharpCode.WpfDesign.xml
+I:\vsproject\Bot\E7Bot\E7Bot\bin\Debug\ICSharpCode.WpfDesign.Designer.pdb
+I:\vsproject\Bot\E7Bot\E7Bot\bin\Debug\ICSharpCode.WpfDesign.Designer.xml
+I:\vsproject\Bot\E7Bot\E7Bot\bin\Debug\ICSharpCode.WpfDesign.XamlDom.pdb
+I:\vsproject\Bot\E7Bot\E7Bot\bin\Debug\ICSharpCode.WpfDesign.XamlDom.xml
+I:\vsproject\Bot\E7Bot\E7Bot\obj\Debug\GeneratedInternalTypeHelper.g.cs
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\E7Bot.exe.config
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\E7Bot.exe
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\E7Bot.pdb
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot.csprojAssemblyReference.cache
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\obj\Debug\MainWindow.baml
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\obj\Debug\MainWindow.g.cs
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\obj\Debug\App.g.cs
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot_MarkupCompile.cache
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot.g.resources
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot.Properties.Resources.resources
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot.csproj.GenerateResource.cache
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot.csproj.CoreCompileInputs.cache
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot.csproj.CopyComplete
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot.exe
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot.pdb
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\dll\x86\OpenCvSharpExtern.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\dll\x86\opencv_ffmpeg400.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\dll\x64\OpenCvSharpExtern.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\dll\x64\opencv_ffmpeg400_64.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\OpenCvSharp.Blob.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\OpenCvSharp.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\OpenCvSharp.Extensions.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\OpenCvSharp.UserInterface.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\OpenCvSharp.pdb
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\OpenCvSharp.xml
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\OpenCvSharp.Blob.pdb
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\OpenCvSharp.Blob.xml
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\OpenCvSharp.Extensions.pdb
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\OpenCvSharp.Extensions.xml
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\OpenCvSharp.UserInterface.pdb
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\OpenCvSharp.UserInterface.xml
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot.exe.config
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\System.Data.Common.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\System.Diagnostics.StackTrace.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\System.Diagnostics.Tracing.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\System.Globalization.Extensions.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\System.IO.Compression.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\System.Net.Http.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\System.Net.Sockets.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\System.Runtime.Serialization.Primitives.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\System.Security.Cryptography.Algorithms.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\System.Security.SecureString.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\System.Threading.Overlapped.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\System.Xml.XPath.XDocument.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\PacketDotNet.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\SharpPcap.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot_MarkupCompile.lref
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\NHotkey.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\NHotkey.Wpf.dll
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\obj\Debug\GeneratedInternalTypeHelper.g.cs

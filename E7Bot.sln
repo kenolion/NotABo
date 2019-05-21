@@ -1,0 +1,24 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2050
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E7Bot", "E7Bot\E7Bot.csproj", "{FA4AB42E-D314-41BB-AC3C-3D5450112D7D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA4AB42E-D314-41BB-AC3C-3D5450112D7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA4AB42E-D314-41BB-AC3C-3D5450112D7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA4AB42E-D314-41BB-AC3C-3D5450112D7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA4AB42E-D314-41BB-AC3C-3D5450112D7D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4500C940-1284-4A24-BE57-ACAA11D5F1F2}
+	EndGlobalSection
+EndGlobal
