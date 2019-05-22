@@ -80,7 +80,7 @@ namespace E7Bot
     {
         public E7Timer timerTest;
         private E7Timer updateUi;
-        private List<ImageRecognition> temp;
+        private List<Action> temp;
         public string selectedName { get; set; }
         public SimpleCommand simp;
 
@@ -116,7 +116,7 @@ namespace E7Bot
         {
             InitializeComponent();
             AllocConsole();
-            temp = new List<ImageRecognition>();
+            temp = new List<Action>();
             actionBT = new Tree();
             timerTest = new E7Timer(1000);
             actions = new ObservableCollection<Action>();
@@ -128,9 +128,24 @@ namespace E7Bot
             imgName = new KeyValueControl();
             imgName.Key = "firstName";
             timerTest.SetFunction(iterateThroughList);
+            
+            
             actions.Add(new Action("ConfirmBlue.png", false));
-            actionBT.Insert();
-            actionBT.c.actions.Add(actions[0]);
+            temp.Add(actions[0]);
+            actionBT.Insert(temp,"CfmBlue");
+           // actionBT.c.actions.Add(actions[0]);
+            
+ 
+            actions.Add(new Action("SelectTeam.png", false));
+            temp.Clear();
+            temp.Add(actions[1]);
+            actionBT.Insert(temp,"SltTem");
+
+            Node nod = actionBT.getNodeByName("CfmBlue");
+            //nod
+            Console.WriteLine(nod.name);
+            //actionBT.c.actions.Add(actions[1]);
+
         }
 
         private void onStartHotkey(object sender, HotkeyEventArgs e)

@@ -8,16 +8,18 @@ namespace E7Bot
     {
         public bool active;
         public int id;
+        public string name;
         public Action action;
         public List<Action> actions;
         public Node parent;
         public Node left;
         public Node right;
 
-        public Node()
+        public Node(List<Action> actions, string name)
         {
             active = false;
-            actions = new List<Action>();
+            this.name = name;
+            this.actions = actions.ToList();
         }
 
         public void deleteActionAt(string name)
@@ -28,7 +30,6 @@ namespace E7Bot
                 {
                     actions.RemoveAt(i);
                 }
-                
             }
         }
     }
@@ -44,6 +45,7 @@ namespace E7Bot
         {
             root = null;
             lastId = 0;
+            avaiId = new List<int>();
         }
 
         public Node ReturnRoot()
@@ -70,9 +72,24 @@ namespace E7Bot
 
         public void run()
         {
+            bool goNxt = true;
+            for (int i = 0; i < c.actions.Count; i++)
+            {
+                goNxt = c.actions[i].run();
+                if (!goNxt)
+                {
+                    break;
+                }
+            }
+
             if (c.left != null)
             {
-                c.left.active = c.left.action.run();
+                c.left.active = goNxt;
+                if (!c.left.active)
+                {
+                    if (c.right != null)
+                        c.right.active = true;
+                }
             }
 
             c = getNext();
@@ -84,18 +101,31 @@ namespace E7Bot
             Node parent = nToDlt.parent;
             if (nToDlt != null)
             {
-                if (nToDlt.left != null)
+                if (nToDlt.left != root)
                 {
-                    parent.left = nToDlt.left;
+                    if (nToDlt.left != null)
+                    {
+                        parent.left = nToDlt.left;
+                    }
                 }
-                else if (nToDlt.right != null)
-                {
-                    parent.right = nToDlt.right;
-                }
+
+                nToDlt.right = null;
+
+                avaiId.Add(id);
             }
         }
 
-        public Node inOrder([CanBeNull] Node node, int id)
+        public Node getNodeById(int id)
+        {
+            return inOrder(root, id);
+        }
+        
+        public Node getNodeByName(string name)
+        {
+            return inOrder(root, name);
+        }
+
+        private Node inOrder([CanBeNull] Node node, int id)
         {
             inOrder(node?.left, id);
             if (id.Equals(node?.id))
@@ -106,13 +136,25 @@ namespace E7Bot
             inOrder(node?.right, id);
             return null;
         }
-
-        public void Insert(bool left = true)
+        
+        private Node inOrder([CanBeNull] Node node, string name)
         {
-            Node newNode = new Node();
+            inOrder(node?.left, name);
+            if (name.Equals(node?.name))
+            {
+                return node;
+            }
+
+            inOrder(node?.right, name);
+            return null;
+        }
+
+        public void Insert(List<Action> actions, string name, bool left = true)
+        {
+            Node newNode = new Node(actions, name);
             if (avaiId.Count == 0)
             {
-                root.id = lastId++;
+                newNode.id = lastId++;
             }
             else
             {
@@ -138,6 +180,7 @@ namespace E7Bot
                         if (current == null)
                         {
                             parent.left = newNode;
+                            newNode.left = root;
                             return;
                         }
                     }
@@ -154,3 +197,4 @@ namespace E7Bot
             }
         }
     }
+}
