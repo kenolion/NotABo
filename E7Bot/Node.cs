@@ -1,51 +1,60 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using E7Bot.Annotations;
 
 namespace E7Bot
 {
+    [Serializable]
     public class Node
     {
         public bool active;
-        public int id;
-        public string name;
-        public Action action;
-        public List<Action> actions;
+        public int id { get; set; }
+
+        public bool isLeftChild{ get; set; }
+        
+        public string name { get; set; }
+        public List<Action> lActions;
+        public List<Action> rActions;
         public Node parent;
         public Node left;
         public Node right;
 
-        public Node(List<Action> actions, string name)
+        public Node(List<Action> lactions, List<Action> ractions, string name)
         {
             active = false;
             this.name = name;
-            this.actions = actions.ToList();
+            this.lActions = lactions?.ToList();
+            isLeftChild = false;
+            this.rActions = ractions?.ToList();
         }
 
         public void deleteActionAt(string name)
         {
-            for (int i = 0; i < actions.Count; i++)
+            for (int i = 0; i < lActions.Count; i++)
             {
-                if (actions[i].name == name)
+                if (lActions[i].name == name)
                 {
-                    actions.RemoveAt(i);
+                    lActions.RemoveAt(i);
                 }
             }
         }
     }
 
+    [Serializable]
     public class Tree
     {
         public Node root;
         public Node c;
-        public List<int> avaiId;
+        public Node tempFind;
+        public HashSet<int> avaiId;
         public int lastId;
 
         public Tree()
         {
             root = null;
             lastId = 0;
-            avaiId = new List<int>();
+            avaiId = new HashSet<int>();
         }
 
         public Node ReturnRoot()
@@ -72,15 +81,17 @@ namespace E7Bot
 
         public void run()
         {
+            Console.WriteLine(c.name);
             bool goNxt = true;
-            for (int i = 0; i < c.actions.Count; i++)
+            for (int i = 0; i < c.lActions.Count; i++)
             {
-                goNxt = c.actions[i].run();
+                goNxt = c.lActions[i].run();
                 if (!goNxt)
                 {
                     break;
                 }
             }
+
 
             if (c.left != null)
             {
@@ -92,24 +103,63 @@ namespace E7Bot
                 }
             }
 
+            if (c.right != null)
+            {
+                goNxt = true;
+                for (int i = 0; i < c.rActions.Count; i++)
+                {
+                    goNxt = c.rActions[i].run();
+                    if (!goNxt)
+                    {
+                        break;
+                    }
+                }
+
+
+                c.right.active = goNxt;
+            }
+
             c = getNext();
         }
 
         public void deleteNode(int id)
         {
-            Node nToDlt = inOrder(root, id);
+            inOrder(root, id);
+            Node nToDlt = tempFind;
             Node parent = nToDlt.parent;
             if (nToDlt != null)
             {
-                if (nToDlt.left != root)
+                if (nToDlt.left != null)
                 {
-                    if (nToDlt.left != null)
+                    if (nToDlt.left != root )
                     {
                         parent.left = nToDlt.left;
                     }
+
+                    if (nToDlt.isLeftChild)
+                    {
+                        parent.left = null;
+                        if (nToDlt.left != null)
+                        {
+                            parent.left = nToDlt.left;
+                        }
+                    }
+                    /*else
+                    {
+                        parent.right = null;
+                        if (nToDlt.right != null)
+                        {
+                           
+                        }
+                    }*/
                 }
 
                 nToDlt.right = null;
+                if (nToDlt.id == root.id)
+                {
+                    root = null;
+                    nToDlt = null;
+                }
 
                 avaiId.Add(id);
             }
@@ -117,54 +167,71 @@ namespace E7Bot
 
         public Node getNodeById(int id)
         {
-            return inOrder(root, id);
+            inOrder(root, id);
+            return tempFind;
         }
-        
+
         public Node getNodeByName(string name)
         {
-            return inOrder(root, name);
+            inOrder(root, name);
+            return tempFind;
         }
 
-        private Node inOrder([CanBeNull] Node node, int id)
+        private void inOrder([CanBeNull] Node node, int id)
         {
-            inOrder(node?.left, id);
-            if (id.Equals(node?.id))
+            if (node != null)
             {
-                return node;
-            }
+                if (node.left != root)
+                {
+                    inOrder(node?.left, id);
+                }
 
-            inOrder(node?.right, id);
-            return null;
+                if (id.Equals(node?.id))
+                {
+                    tempFind = node;
+                }
+
+                inOrder(node?.right, id);
+            }
         }
-        
-        private Node inOrder([CanBeNull] Node node, string name)
+
+        private void inOrder([CanBeNull] Node node, string name)
         {
-            inOrder(node?.left, name);
-            if (name.Equals(node?.name))
+            if (node != null)
             {
-                return node;
-            }
+                if (node.left != root)
+                {
+                    inOrder(node?.left, name);
+                }
 
-            inOrder(node?.right, name);
-            return null;
+                if (name.Equals(node?.name))
+                {
+                    tempFind = node;
+                }
+
+                inOrder(node?.right, name);
+            }
         }
 
-        public void Insert(List<Action> actions, string name, bool left = true)
+        public void Insert(List<Action> lActions, List<Action> rActions, string name, bool left = true)
         {
-            Node newNode = new Node(actions, name);
+            Node newNode = new Node(lActions, rActions, name);
             if (avaiId.Count == 0)
             {
                 newNode.id = lastId++;
             }
             else
             {
-                root.id = avaiId.Last();
+                int lastId =avaiId.Last();
+                newNode.id = lastId;
+                avaiId.Remove(lastId);
             }
 
             if (root == null)
             {
                 root = newNode;
                 c = root;
+                root.left = root;
             }
             else
             {
@@ -173,25 +240,34 @@ namespace E7Bot
                 while (true)
                 {
                     parent = current;
-                    newNode.parent = parent;
+                    //newNode.parent = parent;
+                    //newNode.left = root;
                     if (left)
                     {
-                        current = current.left;
-                        if (current == null)
-                        {
-                            parent.left = newNode;
-                            newNode.left = root;
-                            return;
-                        }
+                        newNode.isLeftChild = true;
+
+    
+                            if (current.left == root)
+                            {
+                                current.left = newNode;
+                                newNode.parent = parent;
+                                newNode.left = root;
+                                return;
+                            }
+
+                            current = current.left;
                     }
                     else
                     {
-                        current = current.right;
-                        if (current == null)
+                        if (current.right == root)
                         {
-                            parent.right = newNode;
+                            current.right = newNode;
+                            newNode.parent = parent;
+                            newNode.right = root;
                             return;
                         }
+                        current = current.right;
+          
                     }
                 }
             }

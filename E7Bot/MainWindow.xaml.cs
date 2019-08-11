@@ -10,6 +10,8 @@ using OpenCvSharp;
 using Rect = OpenCvSharp.Rect;
 using Window = System.Windows.Window;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Controls;
 using System.Windows.Input;
 using NHotkey;
 using NHotkey.Wpf;
@@ -93,6 +95,8 @@ namespace E7Bot
 
         public ObservableCollection<Action> actions { get; set; }
 
+        public static ObservableCollection<Node> dcsTree { get; set; }
+
         //timer
         private Timer timer;
 
@@ -104,9 +108,8 @@ namespace E7Bot
         //KeyValueControl
         private KeyValueControl imgName;
 
+        public Profile cfg;
 
-        //Binary Tree
-        public Tree actionBT;
 
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -116,37 +119,25 @@ namespace E7Bot
         {
             InitializeComponent();
             AllocConsole();
-            temp = new List<Action>();
-            actionBT = new Tree();
+
+
+            //actionBT = new Tree();
             timerTest = new E7Timer(1000);
             actions = new ObservableCollection<Action>();
-            designerListBox.ItemsSource = actions;
+            dcsTree = new ObservableCollection<Node>();
+            //designerListBox.ItemsSource = actions;
+            nodeListView.ItemsSource = dcsTree;
             this.DataContext = test;
             //hotkeys
             HotkeyManager.Current.AddOrReplace("StartOrStop", Key.F1, ModifierKeys.Shift, onStartHotkey);
             //
+            cfg = new Profile();
             imgName = new KeyValueControl();
             imgName.Key = "firstName";
             timerTest.SetFunction(iterateThroughList);
-            
-            
-            actions.Add(new Action("ConfirmBlue.png", false));
-            temp.Add(actions[0]);
-            actionBT.Insert(temp,"CfmBlue");
-           // actionBT.c.actions.Add(actions[0]);
-            
- 
-            actions.Add(new Action("SelectTeam.png", false));
-            temp.Clear();
-            temp.Add(actions[1]);
-            actionBT.Insert(temp,"SltTem");
-
-            Node nod = actionBT.getNodeByName("CfmBlue");
-            //nod
-            Console.WriteLine(nod.name);
-            //actionBT.c.actions.Add(actions[1]);
-
+            LoadProfile_OnClick(null, null);
         }
+
 
         private void onStartHotkey(object sender, HotkeyEventArgs e)
         {
@@ -243,7 +234,7 @@ namespace E7Bot
 
         public void iterateThroughList(Object source, ElapsedEventArgs e)
         {
-            actionBT.run();
+            Config.actionBT.run();
 //            bool tempCond = true;
 //            List<Rect> r;
 //            for (int j = 0; j < actions[i].link.Count; j++)
@@ -281,16 +272,6 @@ namespace E7Bot
             return found;
         }
 
-        public void getImages(object sender, RoutedEventArgs e)
-        {
-            DirectoryInfo dirInfo = new DirectoryInfo("Images");
-            FileInfo[] info = dirInfo.GetFiles("*.*", SearchOption.AllDirectories);
-            ComboBox1.Items.Clear();
-            for (int j = 0; j < info.Length; j++)
-            {
-                ComboBox1.Items.Add(info[j].Name);
-            }
-        }
 
         private void Btn_OnClick(object sender, RoutedEventArgs e)
         {
@@ -320,16 +301,98 @@ namespace E7Bot
             noRefill = !noRefill;
         }
 
-        private void addNew(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         private void NewImageBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            actions.Add(new Action(ComboBox1.SelectionBoxItem.ToString(), true));
+            //actions.Add(new Action(ComboBox1.SelectionBoxItem.ToString(), true));
+            if (!String.IsNullOrEmpty(nodeName.Text))
+            {
+                Config.actionBT.Insert(null, null, nodeName.Text);
+                dcsTree.Add(Config.actionBT.getNodeByName(nodeName.Text));
+                ActionsList al = new ActionsList(dcsTree.Last());
+                al.Show();
+                ((MainWindow) System.Windows.Application.Current.MainWindow).UpdateLayout();
+                nodeName.Text = "";
+            }
+        }
+
+        private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Action a = (Action) ((ListViewItem) sender).Content;
+            Console.WriteLine(a.name);
+        }
+
+        private void ListViewItem_PreviewNode(object sender, MouseButtonEventArgs e)
+        {
+            Node a = (Node) ((ListViewItem) sender).Content;
+            ActionsList al = new ActionsList(a);
+            // a.name = "test";
+
+            al.Show();
+            Console.WriteLine(a.name);
+
+            Console.WriteLine(dcsTree.Last().name);
+        }
+
+        private void deleteNode(object sender, RoutedEventArgs e)
+        {
+            Button btn = (Button) sender;
+            int index = int.Parse(btn.Tag.ToString());
+            Config.actionBT.deleteNode(index);
+            dcsTree.RemoveAt(index);
+        }
+
+        private void LoadProfile_OnClick(object sender, RoutedEventArgs e)
+        {
+            
+            String selected = "";
+            selected = Config.CFG_PATH + "default";
+            profNameTextBox.Text = "default";
+            if (!String.IsNullOrEmpty(ConfigFilesCB.SelectionBoxItem.ToString()))
+            {
+                selected = Config.CFG_PATH + ConfigFilesCB.SelectionBoxItem;
+                profNameTextBox.Text = ConfigFilesCB.SelectionBoxItem.ToString();
+            }
+
+            if (!String.IsNullOrEmpty(selected))
+            {
+                cfg = SaveNLoad.deSerialize(selected);
+                
+                Config.actionBT = cfg.actionBT;
+                
+                dcsTree.Clear();
+
+                for (int j = 0; j < cfg.dcsTree.Count; j++)
+                {
+                    dcsTree.Add(cfg.dcsTree[j]);
+                }
+
+               
+            }
+            Config.getCfg(ConfigFilesCB);
+        }
+
+        private void SaveProfile_OnClick(object sender, RoutedEventArgs e)
+        {
+            String filePath = Config.CFG_PATH + "default";
+            if (!String.IsNullOrEmpty(profNameTextBox.Text))
+            {
+                filePath = Config.CFG_PATH + profNameTextBox.Text;
+            }
+         
+            cfg.actionBT = Config.actionBT;
+            cfg.dcsTree = dcsTree;
+            SaveNLoad.serializeFile(filePath, cfg);
+            Config.getCfg(ConfigFilesCB);
         }
     }
+
+    [Serializable]
+    public class Profile
+    {
+        public Tree actionBT;
+        public ObservableCollection<Node> dcsTree { get; set; }
+    }
+
 
     public static class VirtualMouse
     {

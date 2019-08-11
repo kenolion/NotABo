@@ -4,7 +4,7 @@
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:c="clr-namespace:E7Bot"
 
-        Title="MainWindow" Height="500" Width="604">
+        Title="MainWindow Powered by: Siew" Height="800" Width="604">
     <Window.Resources>
         <Style TargetType="{x:Type c:KeyValueControl}">
             <Setter Property="Template">
@@ -33,9 +33,6 @@
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" Name="btn" Click="Btn_OnClick" Content="Start Bot" Height="30" Width="80"
                         Canvas.Left="10" />
- 
-
-
             </Grid>
 
             <CheckBox Name="SelectTeamBox" Unchecked="cbChanged" Checked="cbChanged">
@@ -51,39 +48,37 @@
             <TextBlock Name="Subtotal" FontFamily="Resources/#Charlemagne Std" FontSize="20"
                        Text="{Binding Path=total}" />
             <TextBlock Name="Failed" FontFamily="Resources/#Charlemagne Std" FontSize="20" Text="{Binding Path=failed}" />
-
-            <ListView Margin="10" Name="designerListBox">
+            <TextBox Name="nodeName" AcceptsReturn="True" TextWrapping="Wrap" />
+            
+            <ListView Margin="10" Name="nodeListView">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding name}" />
-                        <GridViewColumn Header="Image">
+                        <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding name, Mode=OneWay}" />
+                        <GridViewColumn Width="auto">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Grid>
-                                        <Image Source="{Binding ImageData}" />
-                                    </Grid>
+                                    <Button Content="X" Tag="{Binding id}" Click="deleteNode"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Click?">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <CheckBox IsChecked="{Binding IsClick}" />
-                                    </Grid>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-
-                        </GridViewColumn>
-
                     </GridView>
                 </ListView.View>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <EventSetter Event="PreviewMouseDoubleClick" Handler="ListViewItem_PreviewNode" />
+                    </Style>
+                </ListView.ItemContainerStyle>
             </ListView>
-            <ComboBox Margin="10,10,0,13" Name="ComboBox1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="194" Height="30"/>
             <Button Name="NewImageBtn" Click="NewImageBtn_OnClick" Content="Add new action"
                     Height="30" Width="100" />
-            <Button Name="listBtn" Click="getImages" Content="Refresh dropdown list"
+            <Label Content="Profile Name" Margin="5"/>
+            <TextBox Name="profNameTextBox" Margin="5"/>
+            <Button Name="saveProfile" Click="SaveProfile_OnClick" Content="Save Profile"
                     Height="30" Width="100" />
+            <ComboBox Margin="10,10,0,13" Name="ConfigFilesCB" HorizontalAlignment="Left" VerticalAlignment="Top" Width="194" Height="30"/>
+            <Button Name="loadProfile" Click="LoadProfile_OnClick" Content="Load Profile"
+                    Height="30" Width="100" />
+            
         </StackPanel>
 
     </Border>

@@ -80,3 +80,5 @@ I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\obj\Debug\E7Bot_MarkupCompile.lre
 I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\NHotkey.dll
 I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\bin\Debug\NHotkey.Wpf.dll
 I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\obj\Debug\GeneratedInternalTypeHelper.g.cs
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\obj\Debug\ActionsList.g.cs
+I:\Programming stuff\vsproject\Bot\E7Bot\E7Bot\obj\Debug\ActionsList.baml

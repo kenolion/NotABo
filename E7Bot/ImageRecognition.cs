@@ -10,23 +10,20 @@ using Rect = OpenCvSharp.Rect;
 
 namespace E7Bot
 {
+    [Serializable]
     public class ImageRecognition
     {
-        private readonly Mat _img;
+       // private readonly Mat _img;
         public string name;
-
+        public string filePath;
        
-
-        public Mat img
-        {
-            get { return _img; }
-        }
+        
 
         public ImageRecognition(string template)
         {
             var temp = "Images/" + template;
             name = template;
-            _img = new Mat(temp);
+            filePath = temp;
         }
 
         public static byte[] ImageToByte(Image img)
@@ -37,6 +34,7 @@ namespace E7Bot
 
         public void RunTemplateMatch(out bool found, out Rect rect)
         {
+            Mat _img = new Mat(filePath);
             found = false;
             Mat refMat = null; //new Mat(reference);
             var bounds = Screen.GetBounds(System.Drawing.Point.Empty);
@@ -83,6 +81,7 @@ namespace E7Bot
                         // if (isClick)
                         {
                             //VirtualMouse.LeftClick();
+                            VirtualMouse.ClickImg(r);
                             Console.WriteLine("Click");
                         }
 

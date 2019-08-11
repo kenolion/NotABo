@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Controls;
@@ -7,6 +8,7 @@ using OpenCvSharp.Extensions;
 
 namespace E7Bot
 {
+    [Serializable]
     public class Action
     {
         public string name { get; set; }
@@ -19,13 +21,15 @@ namespace E7Bot
         public bool isAnd;
         public bool IsClick{ get; set; }
         
+        public bool IsDelete{ get; set; }
+        
         public BitmapImage ImageData
         {
             get
             {
                 using (MemoryStream memory = new MemoryStream())
                 {
-                    img.img.ToBitmap().Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
+                    //img.img.ToBitmap().Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
                     memory.Position = 0;
                     BitmapImage bitmapimage = new BitmapImage();
                     bitmapimage.BeginInit();

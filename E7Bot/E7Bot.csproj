@@ -104,7 +104,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Action.cs" />
+    <Compile Include="ActionsList.xaml.cs">
+      <DependentUpon>ActionsList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Config.cs" />
     <Compile Include="E7Timer.cs" />
+    <Compile Include="SaveNLoad.cs" />
+    <Page Include="ActionsList.xaml" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

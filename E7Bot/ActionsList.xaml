@@ -1,0 +1,71 @@
+<Window x:Class="E7Bot.ActionsList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:E7Bot"
+        mc:Ignorable="d"
+        Title="ActionsList" Height="450" Width="800">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" /> 
+            <RowDefinition Height="Auto" />  
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Label>Name: </Label>
+        <TextBox Name="nameBox" Grid.Column="1" Margin="0,0,0,10" />
+        <Label Grid.Row="1">Previous </Label>
+        <Label Name="prev" Grid.Row="1" Grid.Column="1"></Label>
+        <Label Grid.Row="2">Next Left Node: </Label>
+        <Label Grid.Row="3">Next Right Node: </Label>
+        <Label Name="nxtNodeLeft" Grid.Row="2" Grid.Column="1"></Label>
+        <Label Name="nxtNodeRight" Grid.Row="3" Grid.Column="1"></Label>
+        <Button  Grid.Row="4" Grid.Column="0" Name="UpdateNode" Click="Update_Node_OnClick" Content="Update"
+                Height="30" Width="100" />
+        <ComboBox Grid.Row="4" Grid.Column="1" Margin="10,10,0,13" Name="ComboBox1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="194" Height="30"/>
+        <Button  Grid.Row="3" Grid.Column="2" Name="listBtn" Click="getImages" Content="Refresh dropdown list"
+                Height="30" Width="100" />
+
+        <ListView Grid.Row="5" Margin="10" Name="nodeListView">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding name, Mode=OneWay}" />
+                    <GridViewColumn Width="100">
+                        <Button Content="+" Tag="0" Width="90" Click="addImageOnClick"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="X" Tag="{Binding id}" Click="deleteImage"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView Grid.Row="5" Grid.Column="1"  Margin="10" Name="rightNodeListView">
+            
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding name, Mode=OneWay}" />
+                    <GridViewColumn Width="100">
+                        <Button Content="+" Tag="1" Width="90" Click="addImageOnClick"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="X" Tag="{Binding id}" Click="deleteImage"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button  Grid.Row="5" Grid.Column="2" Name="addImage" Click="addImageOnClick" Content="add new Action"
+                 Height="30" Width="100" />
+    </Grid>
+</Window>
