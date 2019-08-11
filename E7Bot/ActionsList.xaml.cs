@@ -30,11 +30,19 @@ namespace E7Bot
             if (n.right != null)
                 nxtNodeRight.Content = n.right.name;
             n.lActions = node.lActions;
+            n.rActions = node.rActions;
             if (n.lActions != null)
             {
                 foreach (var act in n.lActions)
                 {
                     actions.Add(act);
+                }
+            }
+            if (n.rActions != null)
+            {
+                foreach (var act in n.rActions)
+                {
+                    rActions.Add(act);
                 }
             }
             prev.Content = n.parent?.name ?? "No Parent";
@@ -45,9 +53,18 @@ namespace E7Bot
         private void deleteImage(object sender, RoutedEventArgs e)
         {
             Button btn = (Button) sender;
-        
-            n.lActions.Remove((Action)btn.DataContext);
-            actions.Remove((Action) btn.DataContext);
+            string temp = btn.Tag.ToString();
+            if (temp == "1")
+            {
+                n.rActions.Remove((Action) btn.DataContext);
+                rActions.Remove((Action) btn.DataContext);
+            }
+            else
+            {
+                n.lActions.Remove((Action)btn.DataContext);
+                actions.Remove((Action) btn.DataContext);
+            }
+         
         }
         
         public void getImages(object sender, RoutedEventArgs e)
@@ -82,7 +99,7 @@ namespace E7Bot
             if (temp == "1" && !String.IsNullOrEmpty(ComboBox1.SelectionBoxItem.ToString()))
             {
                 rActions.Add(new Action(ComboBox1.SelectionBoxItem.ToString(), true));
-                n.rActions?.Add(actions.Last());
+                n.rActions?.Add(rActions.Last());
             }
         
         }
@@ -91,5 +108,6 @@ namespace E7Bot
         {
             n.name = nameBox.Text;
         }
+        
     }
 }

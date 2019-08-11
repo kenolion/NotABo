@@ -42,7 +42,15 @@
                         <Button Content="+" Tag="0" Width="90" Click="addImageOnClick"/>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="X" Tag="{Binding id}" Click="deleteImage"/>
+                                <Button Content="X" Tag="0" Click="deleteImage"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="100">
+                        <Label Content="Optional" Tag="0" Width="90" />
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox Name="Optional" IsChecked="{Binding optional, Mode= TwoWay}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -58,7 +66,7 @@
                         <Button Content="+" Tag="1" Width="90" Click="addImageOnClick"/>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="X" Tag="{Binding id}" Click="deleteImage"/>
+                                <Button Content="X" Tag="1" Click="deleteImage"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

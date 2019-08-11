@@ -122,7 +122,7 @@ namespace E7Bot
 
 
             //actionBT = new Tree();
-            timerTest = new E7Timer(1000);
+            timerTest = new E7Timer(1500);
             actions = new ObservableCollection<Action>();
             dcsTree = new ObservableCollection<Node>();
             //designerListBox.ItemsSource = actions;
@@ -277,6 +277,7 @@ namespace E7Bot
         {
             gameState = state.finishRun;
             timerTest.Start();
+            Config.actionBT.resetToRoot();
             i = 0;
             if (timerTest.isStart)
                 btn.Content = "Stop Bot";
@@ -306,7 +307,7 @@ namespace E7Bot
             //actions.Add(new Action(ComboBox1.SelectionBoxItem.ToString(), true));
             if (!String.IsNullOrEmpty(nodeName.Text))
             {
-                Config.actionBT.Insert(null, null, nodeName.Text);
+                Config.actionBT.Insert(nodeName.Text, insertRight.IsChecked.Value);
                 dcsTree.Add(Config.actionBT.getNodeByName(nodeName.Text));
                 ActionsList al = new ActionsList(dcsTree.Last());
                 al.Show();
@@ -337,13 +338,19 @@ namespace E7Bot
         {
             Button btn = (Button) sender;
             int index = int.Parse(btn.Tag.ToString());
-            Config.actionBT.deleteNode(index);
+            bool removeAll = Config.actionBT.deleteNode(index);
+            if (removeAll)
+            {
+                dcsTree.Clear();
+                NewImageBtn.Visibility = Visibility.Visible;
+                return;
+            }
+
             dcsTree.RemoveAt(index);
         }
 
         private void LoadProfile_OnClick(object sender, RoutedEventArgs e)
         {
-            
             String selected = "";
             selected = Config.CFG_PATH + "default";
             profNameTextBox.Text = "default";
@@ -356,18 +363,18 @@ namespace E7Bot
             if (!String.IsNullOrEmpty(selected))
             {
                 cfg = SaveNLoad.deSerialize(selected);
-                
+
                 Config.actionBT = cfg.actionBT;
-                
+
                 dcsTree.Clear();
 
                 for (int j = 0; j < cfg.dcsTree.Count; j++)
                 {
                     dcsTree.Add(cfg.dcsTree[j]);
                 }
-
-               
             }
+
+            NewImageBtn.Visibility = Visibility.Hidden;
             Config.getCfg(ConfigFilesCB);
         }
 
@@ -378,11 +385,36 @@ namespace E7Bot
             {
                 filePath = Config.CFG_PATH + profNameTextBox.Text;
             }
-         
+
             cfg.actionBT = Config.actionBT;
             cfg.dcsTree = dcsTree;
             SaveNLoad.serializeFile(filePath, cfg);
             Config.getCfg(ConfigFilesCB);
+        }
+
+        private void insertRightOnClick(object sender, RoutedEventArgs e)
+        {
+            insertLeftOrRight(sender, true);
+        }
+
+        private void insertLeftOnClick(object sender, RoutedEventArgs e)
+        {
+            insertLeftOrRight(sender);
+        }
+
+        public void insertLeftOrRight(object sender, bool right = false)
+        {
+            if (!String.IsNullOrEmpty(nodeName.Text))
+            {
+                Button btn = (Button) sender;
+                int index = int.Parse(btn.Tag.ToString());
+                Config.actionBT.Insert(index, nodeName.Text, right);
+                dcsTree.Add(Config.actionBT.getNodeById(Config.actionBT.lastAsgId));
+                ActionsList al = new ActionsList(dcsTree.Last());
+                al.Show();
+                ((MainWindow) System.Windows.Application.Current.MainWindow).UpdateLayout();
+                nodeName.Text = "";
+            }
         }
     }
 
@@ -408,6 +440,8 @@ namespace E7Bot
         private const int MOUSEEVENTF_MIDDLEUP = 0x0040;
         private const int MOUSEEVENTF_ABSOLUTE = 0x8000;
 
+        static Random _random = new Random((int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+        
         public static void Move(int xDelta, int yDelta)
         {
             mouse_event(MOUSEEVENTF_MOVE, xDelta, yDelta, 0, 0);
@@ -415,7 +449,7 @@ namespace E7Bot
 
         public static void ClickImg(Rect r, bool isClick = true)
         {
-            MoveTo(r);
+            MoveTo(r, false);
             if (isClick)
                 LeftClick();
         }
@@ -430,6 +464,13 @@ namespace E7Bot
                 tempX += r.Width / 2;
                 tempY += r.Height / 2;
             }
+            else
+            {
+                tempX += _random.Next(r.Width);
+                tempY += _random.Next(r.Height);
+            }
+            
+            
 
             System.Windows.Forms.Cursor.Position = new System.Drawing.Point(tempX,
                 tempY);

@@ -18,7 +18,7 @@ namespace E7Bot
         //private bool _isClick;
 
         public List<int> link;
-        public bool isAnd;
+        public bool optional{ get; set; }
         public bool IsClick{ get; set; }
         
         public bool IsDelete{ get; set; }
@@ -57,6 +57,11 @@ namespace E7Bot
             bool found = false;
             
             img.RunTemplateMatch(out found,out r);
+
+            if (optional)
+            {
+                found = true;
+            }
             
             return found;
         }

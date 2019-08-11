@@ -48,8 +48,6 @@
             <TextBlock Name="Subtotal" FontFamily="Resources/#Charlemagne Std" FontSize="20"
                        Text="{Binding Path=total}" />
             <TextBlock Name="Failed" FontFamily="Resources/#Charlemagne Std" FontSize="20" Text="{Binding Path=failed}" />
-            <TextBox Name="nodeName" AcceptsReturn="True" TextWrapping="Wrap" />
-            
             <ListView Margin="10" Name="nodeListView">
                 <ListView.View>
                     <GridView>
@@ -61,6 +59,20 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
+                        <GridViewColumn Width="auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Insert Left" Tag="{Binding id}" Click="insertLeftOnClick"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Insert Right" Tag="{Binding id}" Click="insertRightOnClick"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                     </GridView>
                 </ListView.View>
                 <ListView.ItemContainerStyle>
@@ -69,8 +81,14 @@
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
-            <Button Name="NewImageBtn" Click="NewImageBtn_OnClick" Content="Add new action"
+            <TextBox Name="nodeName" AcceptsReturn="True" TextWrapping="Wrap" />
+            <Button Name="NewImageBtn" Click="NewImageBtn_OnClick" Content="Add Root"
                     Height="30" Width="100" />
+            <CheckBox Name="insertRight" Unchecked="cbChanged" Checked="cbChanged">
+                <TextBlock>
+                    Insert RightNode<Run Foreground="Blue" TextDecorations="Underline" FontWeight="Bold" />
+                </TextBlock>
+            </CheckBox>
             <Label Content="Profile Name" Margin="5"/>
             <TextBox Name="profNameTextBox" Margin="5"/>
             <Button Name="saveProfile" Click="SaveProfile_OnClick" Content="Save Profile"
