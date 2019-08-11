@@ -229,7 +229,8 @@ namespace E7Bot
 
         public void startBot()
         {
-            timerTest.Start();
+          //  timerTest.Start();
+          iterateThroughList(null,null);
         }
 
         public void iterateThroughList(Object source, ElapsedEventArgs e)
@@ -277,6 +278,7 @@ namespace E7Bot
         {
             gameState = state.finishRun;
             timerTest.Start();
+            //iterateThroughList(null, null);
             Config.actionBT.resetToRoot();
             i = 0;
             if (timerTest.isStart)
@@ -305,6 +307,7 @@ namespace E7Bot
         private void NewImageBtn_OnClick(object sender, RoutedEventArgs e)
         {
             //actions.Add(new Action(ComboBox1.SelectionBoxItem.ToString(), true));
+            NewImageBtn.Visibility = Visibility.Hidden;
             if (!String.IsNullOrEmpty(nodeName.Text))
             {
                 Config.actionBT.Insert(nodeName.Text, insertRight.IsChecked.Value);
@@ -374,7 +377,11 @@ namespace E7Bot
                 }
             }
 
-            NewImageBtn.Visibility = Visibility.Hidden;
+            if (Config.actionBT.root != null)
+            {
+                NewImageBtn.Visibility = Visibility.Hidden;
+            }
+     
             Config.getCfg(ConfigFilesCB);
         }
 

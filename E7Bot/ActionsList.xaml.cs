@@ -16,6 +16,7 @@ namespace E7Bot
         public ObservableCollection<Action> actions { get; set; }
         
         public ObservableCollection<Action> rActions { get; set; }
+
         public ActionsList(Node node)
         {
             n = node;
@@ -47,6 +48,12 @@ namespace E7Bot
             }
             prev.Content = n.parent?.name ?? "No Parent";
             getImages(null,null);
+
+            for (int i = 0; i < Config.actionBT.listOfNodes.Count; i++)
+            {
+                SelectNodeCb.Items.Add(Config.actionBT.listOfNodes[i]);
+            }
+            
         }
 
 
@@ -108,6 +115,13 @@ namespace E7Bot
         {
             n.name = nameBox.Text;
         }
-        
+
+        private void SelectNodeCb_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox cbTest = (ComboBox) sender;
+            Node selectedNode = (Node) cbTest.SelectedItem;
+            n.right = selectedNode;
+            nxtNodeRight.Content = n.right.name;
+        }
     }
 }

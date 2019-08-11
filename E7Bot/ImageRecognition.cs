@@ -89,6 +89,7 @@ namespace E7Bot
                         Rect outRect;
                         Cv2.FloodFill(res, maxloc, new Scalar(0), out outRect, new Scalar(0.1), new Scalar(1.0), 4);
                         found = true;
+                        break;
                     }
                     else
                     {

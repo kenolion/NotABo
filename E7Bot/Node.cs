@@ -59,11 +59,14 @@ namespace E7Bot
         public int lastId;
         public int lastAsgId;
 
+        public List<Node> listOfNodes;
+
         public Tree()
         {
             root = null;
             lastId = 0;
             avaiId = new HashSet<int>();
+            listOfNodes = new List<Node>();
         }
 
         public Node ReturnRoot()
@@ -89,7 +92,6 @@ namespace E7Bot
                     c.active = false;
                     return c.right;
                 }
-                 
             }
 
             return c;
@@ -109,31 +111,27 @@ namespace E7Bot
                 }
             }
 
-
             if (c.left != null)
             {
                 c.left.active = goNxt;
-                if (!c.left.active)
+                
+                if (c.right != null && !c.left.active)
                 {
-                    if (c.right != null)
-                        c.right.active = true;
-                }
-            }
-
-            if (c.right != null)
-            {
-                for (int i = 0; i < c.rActions.Count; i++)
-                {
-                    goNxt = c.rActions[i].run();
-                    if (!goNxt)
+                    for (int i = 0; i < c.rActions.Count; i++)
                     {
-                        break;
+                        goNxt = c.rActions[i].run();
+                        if (!goNxt)
+                        {
+                            break;
+                        }
                     }
+
+                    c.right.active = goNxt;
                 }
-
-
-                c.right.active = goNxt;
             }
+
+            
+            
 
             c = getNext();
         }
@@ -148,6 +146,12 @@ namespace E7Bot
             getNodeById(id);
             Node nToDlt = tempFind;
             Node parent = nToDlt.parent;
+            if (listOfNodes == null)
+            {
+                listOfNodes = new List<Node>();
+            }
+
+            listOfNodes?.Remove(nToDlt);
             if (nToDlt == root)
             {
                 root = null;
@@ -280,7 +284,12 @@ namespace E7Bot
             Node newNode = new Node(name);
             Node insertedNode = getNodeById(idAt);
             newNode.id = getAvaiId();
+            if (listOfNodes == null)
+            {
+                listOfNodes = new List<Node>();
+            }
 
+            listOfNodes.Add(newNode);
             newNode.parent = insertedNode;
             newNode.left = root;
             newNode.right = root;
@@ -312,7 +321,12 @@ namespace E7Bot
         public void Insert(string name, bool right = false)
         {
             Node newNode = new Node(name);
+            if (listOfNodes == null)
+            {
+                listOfNodes = new List<Node>();
+            }
 
+            listOfNodes.Add(newNode);
             newNode.id = getAvaiId();
 
             if (root == null)
