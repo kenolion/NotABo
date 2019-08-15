@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
+using System.Timers;
 using E7Bot.Annotations;
 
 namespace E7Bot
@@ -29,7 +31,6 @@ namespace E7Bot
             this.lActions = lactions?.ToList();
             isLeftChild = false;
             this.rActions = ractions?.ToList();
-           
         }
 
         public Node(string name)
@@ -64,6 +65,8 @@ namespace E7Bot
 
         public List<Node> listOfNodes;
 
+        private E7Timer timer;
+
         public Tree()
         {
             root = null;
@@ -76,7 +79,7 @@ namespace E7Bot
         {
             return root;
         }
-        
+
 
         public Node getNext()
         {
@@ -106,33 +109,43 @@ namespace E7Bot
         public void run()
         {
             Console.WriteLine(c.name);
-            bool goNxt = true;
-            for (int i = 0; i < c.lActions.Count; i++)
-            {
-                goNxt = c.lActions[i].run();
 
-                if (!goNxt)
-                {
-                    break;
-                }
+            bool goNxt = true;
+            if (timer == null)
+            {
+                timer = new E7Timer(3000);
+                timer.SetFunction(nxtTimer);
             }
 
-            if (c.left != null)
+            if (!timer.isStart)
             {
-                c.left.active = goNxt;
-                
-                if (c.right != null && !c.left.active)
+                for (int i = 0; i < c.lActions.Count; i++)
                 {
-                    for (int i = 0; i < c.rActions.Count; i++)
-                    {
-                        goNxt = c.rActions[i].run();
-                        if (!goNxt)
-                        {
-                            break;
-                        }
-                    }
+                    goNxt = c.lActions[i].run();
 
-                    c.right.active = goNxt;
+                    if (!goNxt)
+                    {
+                        break;
+                    }
+                }
+
+                if (c.left != null)
+                {
+                    c.left.active = goNxt;
+
+                    if (c.right != null && !c.left.active)
+                    {
+                        for (int i = 0; i < c.rActions.Count; i++)
+                        {
+                            goNxt = c.rActions[i].run();
+                            if (!goNxt)
+                            {
+                                break;
+                            }
+                        }
+
+                        c.right.active = goNxt;
+                    }
                 }
             }
 
@@ -140,10 +153,19 @@ namespace E7Bot
             {
                 VirtualMouse.LeftClick();
             }
-            
-            
 
+
+            if (goNxt)
+            {
+                if (!timer.isStart)
+                    timer.Start();
+            }
+        }
+
+        public void nxtTimer(Object source, ElapsedEventArgs e)
+        {
             c = getNext();
+            timer.Stop();
         }
 
         public void resetToRoot()

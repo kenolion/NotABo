@@ -238,41 +238,7 @@ namespace E7Bot
         public void iterateThroughList(Object source, ElapsedEventArgs e)
         {
             Config.actionBT.run();
-//            bool tempCond = true;
-//            List<Rect> r;
-//            for (int j = 0; j < actions[i].link.Count; j++)
-//            {
-//                var temp = actions[actions[i].link[j]];
-//                tempCond = temp.run();
-//            }
-//
-//            if (actions[i].isAnd)
-//            {
-//                if (actions[i].run())
-//                {
-//                    i++;
-//                    if (i >= actions.Count)
-//                    {
-//                        i = 0;
-//                    }
-//                }
-//            }
-        }
-
-        public bool findImage(ImageRecognition find)
-        {
-            bool found = false;
-            // find.RunTemplateMatch(out found, Dispatcher);
-            Dispatcher.Invoke(() =>
-            {
-                if (found)
-                    Console.WriteLine("Found" + find.name);
-                else
-                {
-                    Console.WriteLine("Cannot Find" + find.name);
-                }
-            });
-            return found;
+//    
         }
 
 

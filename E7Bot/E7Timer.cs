@@ -39,6 +39,8 @@ namespace E7Bot
         public void Stop()
         {
             aTimer.Stop();
+            isStart = false;
+            
         }
     }
 }
