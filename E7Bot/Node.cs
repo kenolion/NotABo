@@ -20,6 +20,7 @@ namespace E7Bot
         public Node parent;
         public Node left;
         public Node right;
+        public bool click { get; set; }
 
         public Node(List<Action> lactions, List<Action> ractions, string name)
         {
@@ -28,6 +29,7 @@ namespace E7Bot
             this.lActions = lactions?.ToList();
             isLeftChild = false;
             this.rActions = ractions?.ToList();
+           
         }
 
         public Node(string name)
@@ -35,6 +37,7 @@ namespace E7Bot
             active = false;
             this.name = name;
             isLeftChild = false;
+            click = true;
         }
 
         public void deleteActionAt(string name)
@@ -73,6 +76,7 @@ namespace E7Bot
         {
             return root;
         }
+        
 
         public Node getNext()
         {
@@ -80,6 +84,7 @@ namespace E7Bot
             {
                 if (c.left.active)
                 {
+                    Config.shutDowntime.Start();
                     c.active = false;
                     return c.left;
                 }
@@ -89,6 +94,7 @@ namespace E7Bot
             {
                 if (c.right.active)
                 {
+                    Config.shutDowntime.Start();
                     c.active = false;
                     return c.right;
                 }
@@ -130,6 +136,10 @@ namespace E7Bot
                 }
             }
 
+            if (!goNxt && c.click)
+            {
+                VirtualMouse.LeftClick();
+            }
             
             
 
@@ -141,7 +151,7 @@ namespace E7Bot
             c = root;
         }
 
-        public bool deleteNode(int id)
+        public Node deleteNode(int id)
         {
             getNodeById(id);
             Node nToDlt = tempFind;
@@ -157,7 +167,7 @@ namespace E7Bot
                 root = null;
                 lastId = 0;
                 avaiId.Clear();
-                return true;
+                return nToDlt;
             }
 
             if (nToDlt != null)
@@ -192,13 +202,13 @@ namespace E7Bot
                 if (nToDlt.id == root.id)
                 {
                     root = null;
-                    nToDlt = null;
+                    //nToDlt = null;
                 }
 
                 avaiId.Add(id);
             }
 
-            return false;
+            return nToDlt;
         }
 
         public Node getNodeById(int id)
@@ -269,8 +279,9 @@ namespace E7Bot
         {
             if (avaiId.Count == 0)
             {
+                lastId += 1;
                 lastAsgId = lastId;
-                return lastId++;
+                return lastId;
             }
 
             lastId = avaiId.Last();
@@ -300,6 +311,8 @@ namespace E7Bot
                     newNode.left = insertedNode.left;
                     insertedNode.left.parent = newNode;
                 }
+
+                newNode.isLeftChild = true;
 
                 insertedNode.left = newNode;
             }

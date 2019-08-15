@@ -20,13 +20,15 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Label>Name: </Label>
+        <Label>Name: </Label>    
         <TextBox Name="nameBox" Grid.Column="1" Margin="0,0,0,10" />
         <Label Grid.Row="1">Previous </Label>
         <Label Name="prev" Grid.Row="1" Grid.Column="1"></Label>
         <Label Grid.Row="2">Next Left Node: </Label>
         <Label Grid.Row="3">Next Right Node: </Label>
-        <Label Name="nxtNodeLeft" Grid.Row="2" Grid.Column="1"></Label>
+        <Label Name="nxtNodeLeft" Grid.Row="2" Grid.Column="1"></Label> 
+        <ComboBox Grid.Row="2" Grid.Column="2" Margin="10,10,0,13" SelectionChanged="LeftSelectNodeCb_OnSelectionChanged" Name="LeftSelectNodeCb" ItemsSource="{Binding Path=Node}" DisplayMemberPath="name" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="194" Height="30"/>
+
         <Label Name="nxtNodeRight" Grid.Row="3" Grid.Column="1"></Label> 
         <ComboBox Grid.Row="3" Grid.Column="2" Margin="10,10,0,13" SelectionChanged="SelectNodeCb_OnSelectionChanged" Name="SelectNodeCb" ItemsSource="{Binding Path=Node}" DisplayMemberPath="name" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="194" Height="30"/>
 

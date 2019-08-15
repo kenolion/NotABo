@@ -135,7 +135,9 @@ namespace E7Bot
             imgName = new KeyValueControl();
             imgName.Key = "firstName";
             timerTest.SetFunction(iterateThroughList);
+            
             LoadProfile_OnClick(null, null);
+           // Config.shutDowntime.SetFunction(Config.shutDownPc);
         }
 
 
@@ -278,6 +280,7 @@ namespace E7Bot
         {
             gameState = state.finishRun;
             timerTest.Start();
+            Config.shutDowntime.Start();
             //iterateThroughList(null, null);
             Config.actionBT.resetToRoot();
             i = 0;
@@ -310,7 +313,7 @@ namespace E7Bot
             NewImageBtn.Visibility = Visibility.Hidden;
             if (!String.IsNullOrEmpty(nodeName.Text))
             {
-                Config.actionBT.Insert(nodeName.Text, insertRight.IsChecked.Value);
+                Config.actionBT.Insert(nodeName.Text);
                 dcsTree.Add(Config.actionBT.getNodeByName(nodeName.Text));
                 ActionsList al = new ActionsList(dcsTree.Last());
                 al.Show();
@@ -341,15 +344,15 @@ namespace E7Bot
         {
             Button btn = (Button) sender;
             int index = int.Parse(btn.Tag.ToString());
-            bool removeAll = Config.actionBT.deleteNode(index);
-            if (removeAll)
+            Node removeAll = Config.actionBT.deleteNode(index);
+            if (removeAll == Config.actionBT.root)
             {
                 dcsTree.Clear();
                 NewImageBtn.Visibility = Visibility.Visible;
                 return;
             }
 
-            dcsTree.RemoveAt(index);
+            dcsTree.Remove(removeAll);
         }
 
         private void LoadProfile_OnClick(object sender, RoutedEventArgs e)
@@ -417,7 +420,7 @@ namespace E7Bot
                 int index = int.Parse(btn.Tag.ToString());
                 Config.actionBT.Insert(index, nodeName.Text, right);
                 dcsTree.Add(Config.actionBT.getNodeById(Config.actionBT.lastAsgId));
-                ActionsList al = new ActionsList(dcsTree.Last());
+                ActionsList al = new ActionsList(dcsTree.Last());    
                 al.Show();
                 ((MainWindow) System.Windows.Application.Current.MainWindow).UpdateLayout();
                 nodeName.Text = "";
