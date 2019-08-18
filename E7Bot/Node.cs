@@ -113,7 +113,7 @@ namespace E7Bot
             bool goNxt = true;
             if (timer == null)
             {
-                timer = new E7Timer(3000);
+                timer = new E7Timer(1000);
                 timer.SetFunction(nxtTimer);
             }
 

@@ -36,15 +36,24 @@ namespace E7Bot
 
         public static void getCfg(ComboBox cb)
         {
-            profiles.Clear();
-            cb.Items.Clear();
-            DirectoryInfo dirInfo = new DirectoryInfo("cfg");
-            FileInfo[] info = dirInfo.GetFiles("*.*", SearchOption.AllDirectories);
-            for (int j = 0; j < info.Length; j++)
+            try
             {
-                profiles.Add(info[j].Name);
-                cb.Items.Add(info[j].Name);
+                profiles.Clear();
+                cb.Items.Clear();
+                DirectoryInfo dirInfo = new DirectoryInfo("cfg");
+                FileInfo[] info = dirInfo.GetFiles("*.*", SearchOption.AllDirectories);
+                for (int j = 0; j < info.Length; j++)
+                {
+                    profiles.Add(info[j].Name);
+                    cb.Items.Add(info[j].Name);
+                }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+       
         }
         
         

@@ -20,9 +20,9 @@ namespace E7Bot
 
             try
             {
-                Stream s = File.Open(fileNm,FileMode.Open);
-                BinaryFormatter b = new BinaryFormatter();  
-                Profile t = (Profile) b.Deserialize(s); 
+                Stream s = File.Open(fileNm, FileMode.Open);
+                BinaryFormatter b = new BinaryFormatter();
+                Profile t = (Profile) b.Deserialize(s);
                 s.Close();
                 return t;
             }

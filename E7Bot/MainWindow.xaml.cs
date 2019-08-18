@@ -23,18 +23,7 @@ namespace E7Bot
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     ///
-    enum state
-    {
-        finishRun,
-        stageclear,
-        SelectTeam,
-        start,
-        BuyEnergy,
-        tryagain,
-        confirm
-    }
-
-
+    
     public class Stats : INotifyPropertyChanged
     {
         public int _total;
@@ -100,8 +89,6 @@ namespace E7Bot
         //timer
         private Timer timer;
 
-        private state gameState;
-
         //packet sniffer
         private PacketSniffer p;
 
@@ -137,7 +124,7 @@ namespace E7Bot
             timerTest.SetFunction(iterateThroughList);
             
             LoadProfile_OnClick(null, null);
-           // Config.shutDowntime.SetFunction(Config.shutDownPc);
+            // Config.shutDowntime.SetFunction(Config.shutDownPc);
         }
 
 
@@ -228,23 +215,16 @@ namespace E7Bot
                 Console.WriteLine(filename);
             }
         }
-
-        public void startBot()
-        {
-          //  timerTest.Start();
-          iterateThroughList(null,null);
-        }
+        
 
         public void iterateThroughList(Object source, ElapsedEventArgs e)
         {
             Config.actionBT.run();
-//    
         }
 
 
         private void Btn_OnClick(object sender, RoutedEventArgs e)
         {
-            gameState = state.finishRun;
             timerTest.Start();
             Config.shutDowntime.Start();
             //iterateThroughList(null, null);
@@ -259,7 +239,6 @@ namespace E7Bot
         private void Btn_Stop(object sender, RoutedEventArgs e)
         {
             timerTest.Stop();
-            gameState = state.stageclear;
         }
 
         private void cbChanged(object sender, RoutedEventArgs e)
@@ -320,6 +299,8 @@ namespace E7Bot
 
             dcsTree.Remove(removeAll);
         }
+        
+        
 
         private void LoadProfile_OnClick(object sender, RoutedEventArgs e)
         {
@@ -350,8 +331,7 @@ namespace E7Bot
             {
                 NewImageBtn.Visibility = Visibility.Hidden;
             }
-     
-            Config.getCfg(ConfigFilesCB);
+            
         }
 
         private void SaveProfile_OnClick(object sender, RoutedEventArgs e)
@@ -391,6 +371,11 @@ namespace E7Bot
                 ((MainWindow) System.Windows.Application.Current.MainWindow).UpdateLayout();
                 nodeName.Text = "";
             }
+        }
+
+        private void ConfigFilesCB_getCfg(object sender, EventArgs e)
+        {
+            Config.getCfg(ConfigFilesCB);
         }
     }
 
