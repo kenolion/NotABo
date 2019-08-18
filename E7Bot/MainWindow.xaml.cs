@@ -15,7 +15,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using NHotkey;
 using NHotkey.Wpf;
-using Timer = System.Timers.Timer;
 
 namespace E7Bot
 {
