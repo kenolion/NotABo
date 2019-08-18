@@ -5,7 +5,7 @@
         xmlns:c="clr-namespace:E7Bot" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
         
-        Title="MainWindow Powered by: Siew" Height="800" Width="604">
+        Title="E7Bot" Height="800" Width="604">
     <Window.Resources>
         <Style TargetType="{x:Type c:KeyValueControl}">
             <Setter Property="Template">

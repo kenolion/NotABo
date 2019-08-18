@@ -225,7 +225,7 @@ namespace E7Bot
 
         private void Btn_OnClick(object sender, RoutedEventArgs e)
         {
-            //timerTest.Start();
+            timerTest.Start();
             iterateThroughList(null,null);
             Config.shutDowntime.Start();
             //iterateThroughList(null, null);
