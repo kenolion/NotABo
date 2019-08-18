@@ -13,17 +13,20 @@ namespace E7Bot
     [Serializable]
     public class ImageRecognition
     {
-       // private readonly Mat _img;
+        // private readonly Mat _img;
         public string name;
         public string filePath;
-       
-        
+
+
+        private byte[] imgByte;
 
         public ImageRecognition(string template)
         {
             var temp = "Images/" + template;
             name = template;
             filePath = temp;
+            Image img = Image.FromFile(filePath);
+            imgByte = ImageToByte(img);
         }
 
         public static byte[] ImageToByte(Image img)
@@ -34,16 +37,34 @@ namespace E7Bot
 
         public void RunTemplateMatch(out bool found, out Rect rect)
         {
-            Mat _img = new Mat(filePath);
+            if (imgByte == null)
+            {
+                Image img = Image.FromFile(filePath);
+                imgByte = ImageToByte(img);
+            }
+
+            Mat _img = Mat.FromImageData(imgByte); //new Mat(filePath);
+
             found = false;
             Mat refMat = null; //new Mat(reference);
-            var bounds = Screen.GetBounds(System.Drawing.Point.Empty);
+            Screen[] temp = Screen.AllScreens;
+            Rectangle bounds;
+            if (Config.use2ndMntr)
+            {
+                bounds = temp[1].Bounds;
+            }
+            else
+            {
+                bounds = temp[0].Bounds;
+            }
+
+            //Screen.GetBounds(System.Drawing.Point.Empty);
             using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height))
             {
                 using (Graphics g = Graphics.FromImage(bitmap))
                 {
-                    g.CopyFromScreen(System.Drawing.Point.Empty, System.Drawing.Point.Empty, bounds.Size);
-                    refMat = OpenCvSharp.Mat.ImDecode(ImageToByte(bitmap), ImreadModes.Color);
+                    g.CopyFromScreen(bounds.Location.X, bounds.Location.Y, 0, 0, bitmap.Size);
+                    refMat = OpenCvSharp.Mat.ImDecode(ImageToByte(bitmap), ImreadModes.Grayscale);
                 }
 
                 //bitmap.Save("test.jpg", ImageFormat.Jpeg);
@@ -53,7 +74,7 @@ namespace E7Bot
             using (Mat res = new Mat(refMat.Rows - _img.Rows + 1, refMat.Cols - _img.Cols + 1, MatType.CV_32FC1))
             {
                 //Convert input images to gray
-                Mat gref = refMat.CvtColor(ColorConversionCodes.BGR2GRAY);
+                Mat gref = refMat; //refMat.CvtColor(ColorConversionCodes.BGR2GRAY);
                 Mat gtpl = _img.CvtColor(ColorConversionCodes.BGR2GRAY);
 
                 Cv2.MatchTemplate(gref, gtpl, res, TemplateMatchModes.CCoeffNormed);
@@ -70,17 +91,15 @@ namespace E7Bot
                         //Setup the rectangle to draw
                         Rect r = new Rect(new OpenCvSharp.Point(maxloc.X, maxloc.Y),
                             new OpenCvSharp.Size(_img.Width, _img.Height));
-                        /*Console.WriteLine(
-                            $"MinVal={minval.ToString()} MaxVal={maxval.ToString()} MinLoc={minloc.ToString()} MaxLoc={maxloc.ToString()} Rect={r.ToString()}");*/
-
-                        //Draw a rectangle of the matching area
-                        //Cv2.Rectangle(refMat, r, Scalar.LimeGreen, 2);
                         rect = r;
-                        //VirtualMouse.MoveTo(r);
                         Console.WriteLine("Found" + name);
                         // if (isClick)
                         {
                             //VirtualMouse.LeftClick();
+                            if(Config.use2ndMntr){
+                            r.X += temp[0].Bounds.Right;
+                            r.Y += temp[1].Bounds.Top;
+                            }
                             VirtualMouse.ClickImg(r);
                             Console.WriteLine("Click");
                         }
@@ -88,15 +107,18 @@ namespace E7Bot
                         //Fill in the res Mat so you don't find the same area again in the MinMaxLoc
                         Rect outRect;
                         Cv2.FloodFill(res, maxloc, new Scalar(0), out outRect, new Scalar(0.1), new Scalar(1.0), 4);
+
                         found = true;
-                       // break;
+                        /*Cv2.NamedWindow( "Display window", WindowMode.AutoSize );// Create a window for display.
+                        Cv2.ImShow("Display window", gref );   
+                        Cv2.WaitKey(0);*/
+                        break;
                     }
                     else
                     {
                         rect = Rect.Empty;
                         break;
                     }
-                    
                 }
             }
         }

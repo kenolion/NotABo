@@ -22,6 +22,8 @@ namespace E7Bot
         public static string CFG_PATH = "./cfg/";
 
         public static E7Timer shutDowntime = new E7Timer(10000);
+
+        public static bool use2ndMntr { get; set; }
         
         public static void getImages()
         {

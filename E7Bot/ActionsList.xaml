@@ -87,5 +87,6 @@
         </ListView>
         <Button  Grid.Row="5" Grid.Column="2" Name="addImage" Click="addImageOnClick" Content="add new Action"
                  Height="30" Width="100" />
+
     </Grid>
 </Window>

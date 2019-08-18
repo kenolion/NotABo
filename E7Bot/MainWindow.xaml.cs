@@ -122,8 +122,8 @@ namespace E7Bot
             imgName = new KeyValueControl();
             imgName.Key = "firstName";
             timerTest.SetFunction(iterateThroughList);
-            
             LoadProfile_OnClick(null, null);
+            
             // Config.shutDowntime.SetFunction(Config.shutDownPc);
         }
 
@@ -225,7 +225,8 @@ namespace E7Bot
 
         private void Btn_OnClick(object sender, RoutedEventArgs e)
         {
-            timerTest.Start();
+            //timerTest.Start();
+            iterateThroughList(null,null);
             Config.shutDowntime.Start();
             //iterateThroughList(null, null);
             Config.actionBT.resetToRoot();
@@ -376,6 +377,12 @@ namespace E7Bot
         private void ConfigFilesCB_getCfg(object sender, EventArgs e)
         {
             Config.getCfg(ConfigFilesCB);
+        }
+
+        private void MonCheck_OnChecked(object sender, RoutedEventArgs e)
+        {
+            CheckBox cb = (CheckBox) sender;
+            Config.use2ndMntr = cb.IsChecked.Value;
         }
     }
 
