@@ -80,6 +80,11 @@ namespace E7Bot
             return root;
         }
 
+        public void saveChk()
+        {
+            timer = null;
+        }
+
 
         public Node getNext()
         {
@@ -111,6 +116,7 @@ namespace E7Bot
             Console.WriteLine(c.name);
 
             bool goNxt = true;
+            bool firstFail = false;
             if (timer == null)
             {
                 timer = new E7Timer(1000);
@@ -123,15 +129,15 @@ namespace E7Bot
                 {
                     goNxt = c.lActions[i].run();
 
-                    if (!goNxt)
+                    if (!goNxt && !firstFail)
                     {
-                        break;
+                        firstFail = true;
                     }
                 }
 
                 if (c.left != null)
                 {
-                    c.left.active = goNxt;
+                    c.left.active = !firstFail;
 
                     if (c.right != null && !c.left.active)
                     {
@@ -175,8 +181,7 @@ namespace E7Bot
 
         public Node deleteNode(int id)
         {
-            getNodeById(id);
-            Node nToDlt = tempFind;
+            Node nToDlt = getNodeById(id);
             Node parent = nToDlt.parent;
             if (listOfNodes == null)
             {
@@ -184,11 +189,13 @@ namespace E7Bot
             }
 
             listOfNodes?.Remove(nToDlt);
+
             if (nToDlt == root)
             {
-                root = null;
+                //root = null;
                 lastId = 0;
                 avaiId.Clear();
+                listOfNodes.Clear();
                 return nToDlt;
             }
 
@@ -198,39 +205,79 @@ namespace E7Bot
                 {
                     if (nToDlt.left != root)
                     {
-                        parent.left = nToDlt.left;
-                    }
-
-                    if (nToDlt.isLeftChild)
-                    {
-                        parent.left = null;
-                        if (nToDlt.left != null)
+                        if (nToDlt.isLeftChild)
                         {
                             parent.left = nToDlt.left;
+                            nToDlt.left.parent = parent;
                         }
                     }
 
-                    /*else
+                    if (!nToDlt.isLeftChild && parent != root)
                     {
-                        parent.right = null;
-                        if (nToDlt.right != null)
-                        {
-                           
-                        }
-                    }*/
+                        parent.right = root;
+                    }
+            
+                    if (nToDlt.right != root)
+                    {
+                        nToDlt.right.parent = parent;
+                    }
                 }
 
-                nToDlt.right = null;
+
+                findRelatedNodeandDelete(nToDlt);
+                // delete right node if not null
+                if (!isNull(nToDlt.right))
+                {
+                    findRelatedNodeandDelete(nToDlt.right);
+                }
+                
                 if (nToDlt.id == root.id)
                 {
-                    root = null;
-                    //nToDlt = null;
+                    // root = null;
+                    lastId = 0;
+                    listOfNodes.Clear();
+                    avaiId.Clear();
                 }
 
                 avaiId.Add(id);
+              
             }
 
             return nToDlt;
+        }
+
+        private Boolean isNull(Node che)
+        {
+            if (che == null || che == root)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        
+        public Boolean findRelatedNodeandDelete(Node nodeToDlt)
+        {
+            bool exs = false;
+            foreach (var node in listOfNodes)
+            {
+                if (nodeToDlt.parent.id != node.id)
+                {
+                    if (node.left.id == nodeToDlt.id)
+                    {
+                        node.left = root;
+                        exs = true;
+                    }
+
+                    if (node.right.id == nodeToDlt.id)
+                    {
+                        node.right = root;
+                        exs = true;
+                    }
+                }
+            }
+
+            return exs;
         }
 
         public Node getNodeById(int id)
@@ -253,7 +300,7 @@ namespace E7Bot
                 {
                     if (node.left != root)
                     {
-                        find = inOrder(node?.left, id);
+                        find = inOrder(node?.left, id, find);
                     }
 
                     if (id.Equals(node?.id))
@@ -263,7 +310,7 @@ namespace E7Bot
 
                     if (node.right != root)
                     {
-                        find = inOrder(node?.right, id);
+                        find = inOrder(node?.right, id, find);
                     }
                 }
             }

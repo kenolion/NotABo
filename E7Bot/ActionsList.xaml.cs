@@ -53,6 +53,7 @@ namespace E7Bot
             {
                 SelectNodeCb.Items.Add(Config.actionBT.listOfNodes[i]);
                 LeftSelectNodeCb.Items.Add(Config.actionBT.listOfNodes[i]);
+                ParentSelectNodeCb.Items.Add(Config.actionBT.listOfNodes[i]);
             }
 
         }
@@ -132,6 +133,14 @@ namespace E7Bot
             n.left = selectedNode;
             selectedNode.parent = n.left;
             nxtNodeLeft.Content = n.left.name;
+        }
+
+        private void parentSelect_OnSelectionChange(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox cbTest = (ComboBox) sender;
+            Node selectedNode = (Node) cbTest.SelectedItem;
+            n.parent = selectedNode;
+            prev.Content = n.parent.name;
         }
     }
 }

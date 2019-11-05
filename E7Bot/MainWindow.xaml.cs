@@ -22,7 +22,6 @@ namespace E7Bot
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     ///
-    
     public class Stats : INotifyPropertyChanged
     {
         public int _total;
@@ -122,7 +121,7 @@ namespace E7Bot
             imgName.Key = "firstName";
             timerTest.SetFunction(iterateThroughList);
             LoadProfile_OnClick(null, null);
-            
+
             // Config.shutDowntime.SetFunction(Config.shutDownPc);
         }
 
@@ -214,7 +213,7 @@ namespace E7Bot
                 Console.WriteLine(filename);
             }
         }
-        
+
 
         public void iterateThroughList(Object source, ElapsedEventArgs e)
         {
@@ -225,7 +224,7 @@ namespace E7Bot
         private void Btn_OnClick(object sender, RoutedEventArgs e)
         {
             timerTest.Start();
-            iterateThroughList(null,null);
+            iterateThroughList(null, null);
             Config.shutDowntime.Start();
             //iterateThroughList(null, null);
             Config.actionBT.resetToRoot();
@@ -252,19 +251,18 @@ namespace E7Bot
             noRefill = !noRefill;
         }
 
-        private void NewImageBtn_OnClick(object sender, RoutedEventArgs e)
+        private void addRoot_Onclick(object sender, RoutedEventArgs e)
         {
             //actions.Add(new Action(ComboBox1.SelectionBoxItem.ToString(), true));
             NewImageBtn.Visibility = Visibility.Hidden;
-            if (!String.IsNullOrEmpty(nodeName.Text))
-            {
-                Config.actionBT.Insert(nodeName.Text);
-                dcsTree.Add(Config.actionBT.getNodeByName(nodeName.Text));
-                ActionsList al = new ActionsList(dcsTree.Last());
-                al.Show();
-                ((MainWindow) System.Windows.Application.Current.MainWindow).UpdateLayout();
-                nodeName.Text = "";
-            }
+
+            nodeName.Text = String.IsNullOrEmpty(nodeName.Text) ? "Root" : nodeName.Text;
+            Config.actionBT.Insert(nodeName.Text);
+            dcsTree.Add(Config.actionBT.getNodeById(Config.actionBT.lastId));
+            ActionsList al = new ActionsList(dcsTree.Last());
+            al.Show();
+            ((MainWindow) System.Windows.Application.Current.MainWindow).UpdateLayout();
+            nodeName.Text = "";
         }
 
         private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -294,13 +292,14 @@ namespace E7Bot
             {
                 dcsTree.Clear();
                 NewImageBtn.Visibility = Visibility.Visible;
+                Config.actionBT.root = null;
                 return;
             }
-
             dcsTree.Remove(removeAll);
+         
+            
         }
-        
-        
+
 
         private void LoadProfile_OnClick(object sender, RoutedEventArgs e)
         {
@@ -331,7 +330,6 @@ namespace E7Bot
             {
                 NewImageBtn.Visibility = Visibility.Hidden;
             }
-            
         }
 
         private void SaveProfile_OnClick(object sender, RoutedEventArgs e)
@@ -366,7 +364,7 @@ namespace E7Bot
                 int index = int.Parse(btn.Tag.ToString());
                 Config.actionBT.Insert(index, nodeName.Text, right);
                 dcsTree.Add(Config.actionBT.getNodeById(Config.actionBT.lastAsgId));
-                ActionsList al = new ActionsList(dcsTree.Last());    
+                ActionsList al = new ActionsList(dcsTree.Last());
                 al.Show();
                 ((MainWindow) System.Windows.Application.Current.MainWindow).UpdateLayout();
                 nodeName.Text = "";
@@ -407,8 +405,8 @@ namespace E7Bot
         private const int MOUSEEVENTF_MIDDLEUP = 0x0040;
         private const int MOUSEEVENTF_ABSOLUTE = 0x8000;
 
-        static Random _random = new Random((int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
-        
+        static Random _random = new Random((int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+
         public static void Move(int xDelta, int yDelta)
         {
             mouse_event(MOUSEEVENTF_MOVE, xDelta, yDelta, 0, 0);
@@ -436,8 +434,7 @@ namespace E7Bot
                 tempX += _random.Next(r.Width);
                 tempY += _random.Next(r.Height);
             }
-            
-            
+
 
             System.Windows.Forms.Cursor.Position = new System.Drawing.Point(tempX,
                 tempY);

@@ -11,6 +11,7 @@ namespace E7Bot
 
             Stream s = File.OpenWrite(fileNm);
             BinaryFormatter b = new BinaryFormatter();  
+            c.actionBT.saveChk();
             b.Serialize(s, c);  
             s.Close(); 
         }

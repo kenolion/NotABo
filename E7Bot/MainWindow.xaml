@@ -4,7 +4,7 @@
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:c="clr-namespace:E7Bot" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
-        
+
         Title="E7Bot" Height="800" Width="604">
     <Window.Resources>
         <Style TargetType="{x:Type c:KeyValueControl}">
@@ -13,15 +13,19 @@
                     <ControlTemplate TargetType="{x:Type c:KeyValueControl}">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition/>
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Key, RelativeSource={RelativeSource TemplatedParent}}"/>
-                            <TextBox Grid.Column="1" Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text="{Binding Key, RelativeSource={RelativeSource TemplatedParent}}" />
+
+                            <TextBox Grid.Column="1"
+                                     Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Setter Property="Background"
+                    Value="Red" />
         </Style>
     </Window.Resources>
     <Border Padding="10">
@@ -52,32 +56,38 @@
             <ListView Margin="10" Name="nodeListView">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding name, Mode=OneWay}" />
+                        <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding name, Mode=OneWay}"/>
                         <GridViewColumn Width="auto">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="X" Tag="{Binding id}" Click="deleteNode"/>
+                                    <Button Content="X" Tag="{Binding id}" Click="deleteNode">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Setter Property="Foreground" Value="Blue" />
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Width="auto">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="Insert Left" Tag="{Binding id}" Click="insertLeftOnClick"/>
+                                    <Button Content="Insert Left" Tag="{Binding id}" Click="insertLeftOnClick" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Width="auto">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="Insert Right" Tag="{Binding id}" Click="insertRightOnClick"/>
+                                    <Button Content="Insert Right" Tag="{Binding id}" Click="insertRightOnClick" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Width="auto">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <CheckBox Content="Click?" IsChecked="{Binding click, Mode=TwoWay}"/>
+                                    <CheckBox Content="Click?" IsChecked="{Binding click, Mode=TwoWay}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -90,19 +100,21 @@
                 </ListView.ItemContainerStyle>
             </ListView>
             <TextBox Name="nodeName" AcceptsReturn="True" TextWrapping="Wrap" />
-            <Button Name="NewImageBtn" Click="NewImageBtn_OnClick" Content="Add Root"
+            <Button Name="NewImageBtn" Click="addRoot_Onclick" Content="Add Root"
                     Height="30" Width="100" />
-            <Label Content="Profile Name" Margin="5"/>
-            <TextBox Name="profNameTextBox" Margin="5"/>
+            <Label Content="Profile Name" Margin="5" />
+            <TextBox Name="profNameTextBox" Margin="5" />
             <Button Name="saveProfile" Click="SaveProfile_OnClick" Content="Save Profile"
                     Height="30" Width="100" />
-            <ComboBox Margin="10,10,0,13" Initialized="ConfigFilesCB_getCfg" Name="ConfigFilesCB" DropDownClosed="ConfigFilesCB_getCfg" SelectionChanged="LoadProfile_OnClick" HorizontalAlignment="Left" VerticalAlignment="Top" Width="194" Height="30"/>
+            <ComboBox Margin="10,10,0,13" Initialized="ConfigFilesCB_getCfg" Name="ConfigFilesCB"
+                      DropDownClosed="ConfigFilesCB_getCfg" SelectionChanged="LoadProfile_OnClick"
+                      HorizontalAlignment="Left" VerticalAlignment="Top" Width="194" Height="30" />
             <Button Name="loadProfile" Click="LoadProfile_OnClick" Content="Load Profile"
                     Height="30" Width="100" />
-            <CheckBox Content="Use Second Monitor" Name="MonCheck" Checked="MonCheck_OnChecked" Unchecked="MonCheck_OnChecked">
-            </CheckBox>
+            <CheckBox Content="Use Second Monitor" Name="MonCheck" Checked="MonCheck_OnChecked"
+                      Unchecked="MonCheck_OnChecked" />
         </StackPanel>
 
     </Border>
-   
+
 </Window>
